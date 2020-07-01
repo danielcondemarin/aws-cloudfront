@@ -51,14 +51,6 @@ describe('Input origin with path pattern', () => {
   })
 
   it('updates distribution', async () => {
-    mockGetDistributionConfigPromise.mockResolvedValueOnce({
-      ETag: 'etag',
-      DistributionConfig: {
-        Origins: {
-          Items: []
-        }
-      }
-    })
     mockUpdateDistributionPromise.mockResolvedValueOnce({
       Distribution: {
         Id: 'xyz'
@@ -76,6 +68,21 @@ describe('Input origin with path pattern', () => {
           }
         }
       ]
+    })
+
+    mockGetDistributionConfigPromise.mockResolvedValueOnce({
+      ETag: 'etag',
+      DistributionConfig: {
+        Origins: {
+          Quantity: 1,
+          Items: [
+            {
+              Id: 'exampleorigin.com',
+              DomainName: 'exampleorigin.com'
+            }
+          ]
+        }
+      }
     })
 
     await component.default({
